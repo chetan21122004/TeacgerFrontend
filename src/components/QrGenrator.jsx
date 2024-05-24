@@ -10,7 +10,6 @@ function QrGenerator({ initialSize, isGenerating }) {
   const [size, setSize] = useState(initialSize);
 
 
-
   useEffect(() => {
     setSize(initialSize);
   }, [initialSize]);
@@ -25,7 +24,7 @@ function QrGenerator({ initialSize, isGenerating }) {
     
         // Get lec_id from local storage or any other source
         const lec_id = 102;
-    
+        
         // Send both lec_id and tem_lec_id to the server
         const response = await axios.post('https://stu-backend.vercel.app/genrateqr', {
           lec_id: lec_id,

@@ -26,9 +26,9 @@
 import { Button } from "@material-tailwind/react";
 
 import React, { useState } from 'react';
-import { ListStudents } from '../ListStudents';
 import QrGenerator from '../QrGenrator';
 import { useEffect } from 'react';
+import { ListStudents } from "../ListStudents";
 
 function Middle() {
   const [isGenerating, setIsGenerating] = useState(false);
