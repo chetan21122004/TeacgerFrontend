@@ -16,7 +16,7 @@ export function ListStudents() {
 
   const fetchStudents = async () => {
     try {
-      // const response = await axios.post('http://localhost:2000/students/get', { lec_id: 102 });
+      // const response = await axios.post('http://localhost:2000/students/get', { lec_id: 103 });
       const response = await axios.post('https://stu-backend.vercel.app/students/get', { lec_id: 102 });
       console.log(response.data);
       if (response.data !== students){
