@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { FaUser } from "react-icons/fa";
 import {
@@ -8,37 +7,54 @@ import {
   Card,
   Typography,
 } from "@material-tailwind/react";
-import axios from 'axios';
 
 export function ListStudents() {
   const gen = localStorage.getItem("genrating");
   const [students, setStudents] = useState([]);
 
-  const fetchStudents = async () => {
-    try {
-      // const response = await axios.post('http://localhost:2000/students/get', { lec_id: 103 });
-      const response = await axios.post('https://stu-backend.vercel.app/students/get', { lec_id: 102 });
-      console.log(response.data);
-      if (response.data !== students){
-        setStudents(response.data);
-      }
-    } catch (error) {
-      console.error('Error fetching students:', error);
-    }
-  };
-
   useEffect(() => {
-    let intervalId;
-
+    let eventSource;
+  
     if (gen) {
-      intervalId = setInterval(fetchStudents, 3000);
+      eventSource = new EventSource('https://stu-backend.vercel.app/events');
+      eventSource.onopen = () => {
+        console.log('SSE connection established');
+      };
+  
+      eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        console.log('Received data:', data);
+        if (data) {
+          // Check if the student is already present in the students array by comparing student_id
+          setStudents(prevStudents => {
+            const isAlreadyPresent = prevStudents.some(student => student.student_id === data.student_id);
+            console.log(isAlreadyPresent);
+            if (!isAlreadyPresent) {
+              // Add the new student data to the existing list
+              return [...prevStudents, data];
+            } else {
+              console.log("Student already exists in the list");
+              return prevStudents;
+            }
+          });
+        }
+      };
+  
+      eventSource.onerror = (error) => {
+        console.error('SSE error:', error);
+      };
     }
-
-    return () => clearInterval(intervalId);  // Cleanup on component unmount or when gen changes
+  
+    return () => {
+      if (eventSource) {
+        eventSource.close();
+      }
+    };  // Cleanup on component unmount or when gen changes
   }, [gen]);
-
+  
+ 
   return (
-    <div className='m-1'>
+    <div className=''>
       <Card className="w-96">
         <div style={{
           maxHeight: '575px',

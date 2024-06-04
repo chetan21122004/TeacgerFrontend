@@ -26,7 +26,8 @@ function QrGenerator({ initialSize, isGenerating }) {
         const lec_id = 102;
         
         // Send both lec_id and tem_lec_id to the server
-        const response = await axios.post('https://stu-backend.vercel.app/genrateqr', {
+        // const response = await axios.post('https://stu-backend.vercel.app/genrateqr', {
+        const response = await axios.post('http://localhost:2000/genrateqr', {
           lec_id: lec_id,
           tem_lec_id: tem_lec_id
         });
