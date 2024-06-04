@@ -17,6 +17,7 @@ export function ListStudents() {
   
     if (gen) {
       eventSource = new EventSource('https://stu-backend.vercel.app/events');
+      // eventSource = new EventSource('http://localhost:2000/events');
       eventSource.onopen = () => {
         console.log('SSE connection established');
       };
