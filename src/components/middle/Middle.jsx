@@ -40,7 +40,6 @@ function Middle() {
 function stoptogle() {
 
   setIsGenerating(false);
-    localStorage.removeItem("genrating")
   
 }
   const handleGenerateToggle = () => {

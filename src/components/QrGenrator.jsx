@@ -23,8 +23,9 @@ function QrGenerator({ initialSize, isGenerating }) {
         const tem_lec_id = Math.floor(Math.random() * 1000);
     
         // Get lec_id from local storage or any other source
-        const lec_id = 102;
-        
+        const lec_id = 103;
+        localStorage.setItem("lec_id",lec_id)
+
         // Send both lec_id and tem_lec_id to the server
         const response = await axios.post('https://stu-backend.vercel.app/genrateqr', {
         // const response = await axios.post('http://localhost:2000/genrateqr', {
@@ -47,7 +48,11 @@ function QrGenerator({ initialSize, isGenerating }) {
       generateAndPostQR();
 
       // Set interval to call generateAndPostQR every 8 seconds
-      intervalId = setInterval(generateAndPostQR, 20000);
+      intervalId = setInterval(generateAndPostQR, 6000);
+    }
+    if (!isGenerating) {
+    localStorage.removeItem("lec_id")
+      
     }
 
     // Clean up interval when isGenerating changes or component unmounts
