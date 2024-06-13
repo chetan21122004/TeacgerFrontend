@@ -23,7 +23,7 @@ function QrGenerator({ initialSize, isGenerating }) {
         const tem_lec_id = Math.floor(Math.random() * 1000);
     
         // Get lec_id from local storage or any other source
-        const lec_id = 103;
+        const lec_id = 102;
         localStorage.setItem("lec_id",lec_id)
 
         // Send both lec_id and tem_lec_id to the server
