@@ -128,13 +128,13 @@ export function ListStudents() {
   const gen = localStorage.getItem("genrating");
   const [students, setStudents] = useState([]);
   const [lecId, setLecId] = useState(localStorage.getItem("lec_id"));
+  const lec_id =102; // Ensure this is up-to-date
   useEffect(() => {
     localStorage.removeItem("lec_id")
   
   }, [])
   useEffect(() => {
     const fetchStudent = async () => {
-      const lec_id = localStorage.getItem("lec_id"); // Ensure this is up-to-date
       try {
         const response = await axios.post("https://stu-backend.vercel.app/students/get", { lec_id });
         setStudents(response.data);
@@ -157,20 +157,7 @@ export function ListStudents() {
       if (interval) clearInterval(interval);
     };
   }, [gen, lecId]);
-
-  // Optionally, you can update the lecId state when it changes in localStorage
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const updatedLecId = localStorage.getItem("lec_id");
-      setLecId(updatedLecId);
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
+ 
 
   return (
     <div className=''>
